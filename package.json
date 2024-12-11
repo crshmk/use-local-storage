@@ -1,5 +1,5 @@
 {
-  "name": "parcel-ts",
+  "name": "use-local-storage",
   "version": "0.0.1",
   "description": "",
   "main": "dist/index.js",
@@ -12,11 +12,20 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "peerDependencies": {
+    "react": ">=16.8.0"
+  },
   "devDependencies": {
     "@parcel/packager-ts": "^2.13.2",
     "@parcel/transformer-typescript-tsc": "^2.13.2",
     "@parcel/transformer-typescript-types": "^2.13.2",
+    "@types/react": "^19.0.1",
     "parcel": "^2.13.2",
+    "react": "^19.0.0",
     "typescript": "^5.7.2"
+  },
+  "dependencies": {
+    "pretty-format": "^29.7.0",
+    "unstring": "github:crshmk/unstring"
   }
 }
