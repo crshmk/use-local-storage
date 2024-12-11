@@ -1,0 +1,1 @@
+{"mappings":"AAAA,QAAA,MAAM,GAAG,MAAO,MAAM,WAAU,CAAA;AAEhC,eAAe,GAAG,CAAA","sources":["src/src/index.ts","src/index.ts"],"sourcesContent":[null,"const add = (x: number) => x + 1\n\nexport default add  "],"names":[],"version":3,"file":"index.d.ts.map"}
