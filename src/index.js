@@ -46,4 +46,4 @@ const useLocalStorage = (namespace, eventCb) => {
   }
 }
 
-module.exports = useLocalStorage
+export default useLocalStorage
