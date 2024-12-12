@@ -11,7 +11,7 @@ import update from './crud/update'
  * 
  * Emit storage events to other tabs
  */
-const useLocalStorage = (namespace, eventCb) => {
+const useLocalStorage = <NamespaceType extends ParsedObjectOrArray>(namespace: string, eventCb?: Function) => {
 
   useEffect(() => {
     const onStore = receiveStorageEvent(eventCb)
@@ -27,8 +27,9 @@ const useLocalStorage = (namespace, eventCb) => {
      * @param {unknown} value parsed item value 
      * @param {(string | number)[]} path Ramda Path to nested prop 
      */
-    read: read(namespace),
-     /**
+    read: read<NamespaceType>(namespace), //as <NamespaceType>(namespace: any) => <ValueType>(pathToProp?: (string | number)[]) => NamespaceType | ValueType | undefined,
+     
+    /**
      * Set a namespace in localStorage or a nested value at that namespace
      * 
      * Emit the update to other tabs 
@@ -36,7 +37,7 @@ const useLocalStorage = (namespace, eventCb) => {
      * @param {unknown} value parsed item value 
      * @param {(string | number)[]} path Ramda Path to set nested prop, or undefined to set namespace
      */
-    update: update(namespace),
+    update: update<NamespaceType>(namespace),
     /**
      * Remove a namespace from localStorage or a nested value at that namespace
      * 
@@ -46,4 +47,4 @@ const useLocalStorage = (namespace, eventCb) => {
   }
 }
 
-module.exports = useLocalStorage
+export default useLocalStorage

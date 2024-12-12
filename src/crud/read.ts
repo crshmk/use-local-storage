@@ -1,5 +1,6 @@
 import parse from 'unstring'
 import isAbsent from './isAbsent'
+import { path, Path } from 'ramda'
 
 /**
  * Read an namespace in localStorage or a nested value at that namespace
@@ -8,11 +9,11 @@ import isAbsent from './isAbsent'
  * @param {unknown} value parsed item value 
  * @param {(string | number)[] | undefined} path Ramda Path to nested prop 
  */
-const read = namespace => pathToProp => {
+const read = <NamespaceType extends ParsedObjectOrArray>(namespace) => <ValueType>(pathToProp?: Path): NamespaceType | ValueType | undefined  => {
   const stringifiedNamespace = localStorage.getItem(namespace) || ''
   if(isAbsent(stringifiedNamespace)) return undefined
-  const parsedNamespace = parse(stringifiedNamespace)
-  return isAbsent(pathToProp) ? parsedNamespace : path(pathToProp, parsedNamespace)
+  const parsedNamespace = parse(stringifiedNamespace) as NamespaceType
+  return isAbsent(pathToProp) ? parsedNamespace : path<ValueType>(pathToProp as Path, parsedNamespace)
 }
 
 export default read

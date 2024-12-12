@@ -1,78 +1,89 @@
-var $gXNCa$react = require("react");
-var $gXNCa$unstring = require("unstring");
-var $gXNCa$ramda = require("ramda");
+var $8zHUo$react = require("react");
+var $8zHUo$unstring = require("unstring");
+var $8zHUo$ramda = require("ramda");
 
+
+function $parcel$defineInteropFlag(a) {
+  Object.defineProperty(a, '__esModule', {value: true, configurable: true});
+}
+
+function $parcel$export(e, n, v, s) {
+  Object.defineProperty(e, n, {get: v, set: s, enumerable: true, configurable: true});
+}
 
 function $parcel$interopDefault(a) {
   return a && a.__esModule ? a.default : a;
 }
 
+$parcel$defineInteropFlag(module.exports);
+
+$parcel$export(module.exports, "default", () => $fd046e7a82b9f872$export$2e2bcd8739ae039);
+
 
 /**
  * Update the state of this tab when another tab emits a storage event
- * 
+ *
  * @param cb callback handed the parsed value of the namespace
  * @param defaultValue T
  * @returns void
- */ const $ace534a17336fe4d$var$receiveStorageEvent = (cb)=>(e)=>{
+ */ var $3950ad88a2689f3e$var$receiveStorageEvent = function(cb) {
+    return function(e) {
         if (typeof cb !== 'function') return;
         if (!e.newValue) return;
-        const newValue = (0, ($parcel$interopDefault($gXNCa$unstring)))(e.newValue);
+        var newValue = (0, ($parcel$interopDefault($8zHUo$unstring)))(e.newValue);
         cb(newValue);
     };
-var $ace534a17336fe4d$export$2e2bcd8739ae039 = $ace534a17336fe4d$var$receiveStorageEvent;
+};
+var $3950ad88a2689f3e$export$2e2bcd8739ae039 = $3950ad88a2689f3e$var$receiveStorageEvent;
 
 
 
 
-var $f5c61003bc103344$export$2e2bcd8739ae039 = (0, $gXNCa$ramda.anyPass)([
-    (0, $gXNCa$ramda.isEmpty),
-    (0, $gXNCa$ramda.isNil)
+var $f5c61003bc103344$export$2e2bcd8739ae039 = (0, $8zHUo$ramda.anyPass)([
+    (0, $8zHUo$ramda.isEmpty),
+    (0, $8zHUo$ramda.isNil)
 ]);
+
 
 
 /**
  * Read an namespace in localStorage or a nested value at that namespace
- * 
+ *
  * @param {string} namespace root key of localStorage
- * @param {unknown} value parsed item value 
- * @param {(string | number)[] | undefined} path Ramda Path to nested prop 
- */ const $61e6f04d30479333$var$read = (namespace)=>(pathToProp)=>{
-        const stringifiedNamespace = localStorage.getItem(namespace) || '';
+ * @param {unknown} value parsed item value
+ * @param {(string | number)[] | undefined} path Ramda Path to nested prop
+ */ var $64365f19cb59eeb0$var$read = function(namespace) {
+    return function(pathToProp) {
+        var stringifiedNamespace = localStorage.getItem(namespace) || '';
         if ((0, $f5c61003bc103344$export$2e2bcd8739ae039)(stringifiedNamespace)) return undefined;
-        const parsedNamespace = (0, ($parcel$interopDefault($gXNCa$unstring)))(stringifiedNamespace);
-        return (0, $f5c61003bc103344$export$2e2bcd8739ae039)(pathToProp) ? parsedNamespace : path(pathToProp, parsedNamespace);
+        var parsedNamespace = (0, ($parcel$interopDefault($8zHUo$unstring)))(stringifiedNamespace);
+        return (0, $f5c61003bc103344$export$2e2bcd8739ae039)(pathToProp) ? parsedNamespace : (0, $8zHUo$ramda.path)(pathToProp, parsedNamespace);
     };
-var $61e6f04d30479333$export$2e2bcd8739ae039 = $61e6f04d30479333$var$read;
+};
+var $64365f19cb59eeb0$export$2e2bcd8739ae039 = $64365f19cb59eeb0$var$read;
 
 
-/*
-type StorageEventConfig = {
-  storageArea: Storage 
-  url: string 
-  key: string 
-  newValue?: string 
-}
-*/ const $d21870e548692df7$var$emitStorageEvent = (key, stringifiedValue)=>{
-    const config = {
+var $a2c4db6c02f8cb51$var$emitStorageEvent = function(key, stringifiedValue) {
+    var config = {
         storageArea: window.localStorage,
         url: window.location.href,
         key: key,
         newValue: stringifiedValue
     };
-    const storageEvent = new StorageEvent("storage", config);
+    var storageEvent = new StorageEvent("storage", config);
     window.dispatchEvent(storageEvent);
 };
-var $d21870e548692df7$export$2e2bcd8739ae039 = $d21870e548692df7$var$emitStorageEvent;
+var $a2c4db6c02f8cb51$export$2e2bcd8739ae039 = $a2c4db6c02f8cb51$var$emitStorageEvent;
 
 
 
 
 
 
-const $b00c2e3bf3c1d813$var$stringify = (value)=>{
+
+var $bead50853ca58791$var$stringify = function(value) {
     try {
-        const stringifiedValue = JSON.stringify(value);
+        var stringifiedValue = JSON.stringify(value);
         return stringifiedValue;
     } catch (e) {
         return undefined;
@@ -80,76 +91,83 @@ const $b00c2e3bf3c1d813$var$stringify = (value)=>{
 };
 /**
  * Set an namespace in localStorage or a nested value at that namespace
- * 
- * Emit the update to other tabs 
- * 
+ *
+ * Emit the update to other tabs
+ *
  * @param {string} namespace root key of localStorage
- * @param {unknown} value parsed item value 
- * @param {(string | number)[] | undefined} path Ramda Path to nested prop 
- */ const $b00c2e3bf3c1d813$var$update = (namespace)=>(value, path)=>{
-        const currentNamespace = (0, $61e6f04d30479333$export$2e2bcd8739ae039)(namespace)();
-        const updatedNamespaceValue = (0, $gXNCa$ramda.isNil)(path) ? value : (0, $gXNCa$ramda.set)((0, $gXNCa$ramda.lensPath)(path), value, currentNamespace);
-        const stringifiedNamespace = $b00c2e3bf3c1d813$var$stringify(updatedNamespaceValue);
+ * @param {unknown} value parsed item value
+ * @param {(string | number)[] | undefined} path Ramda Path to nested prop
+ */ var $bead50853ca58791$var$update = function(namespace) {
+    return function(value, path) {
+        var currentNamespace = (0, $64365f19cb59eeb0$export$2e2bcd8739ae039)(namespace)();
+        var updatedNamespaceValue = (0, $8zHUo$ramda.isNil)(path) ? value : (0, $8zHUo$ramda.set)((0, $8zHUo$ramda.lensPath)(path), value, currentNamespace);
+        var stringifiedNamespace = $bead50853ca58791$var$stringify(updatedNamespaceValue);
+        if ((0, $f5c61003bc103344$export$2e2bcd8739ae039)(stringifiedNamespace)) return;
         localStorage.setItem(namespace, stringifiedNamespace);
-        (0, $d21870e548692df7$export$2e2bcd8739ae039)(namespace, stringifiedNamespace);
+        (0, $a2c4db6c02f8cb51$export$2e2bcd8739ae039)(namespace, stringifiedNamespace);
     };
-var $b00c2e3bf3c1d813$export$2e2bcd8739ae039 = $b00c2e3bf3c1d813$var$update;
+};
+var $bead50853ca58791$export$2e2bcd8739ae039 = $bead50853ca58791$var$update;
 
 
 
 
 /**
  * Remove a namespace from localStorage or a nested value at that namespace
- * 
+ *
  * @param {string} namespace root key of localStorage
- * @param {(string | number)[] | undefined} path Ramda Path to nested prop  
- */ const $3b44343b1bf75e9f$var$unset = (namespace)=>(pathToProp)=>{
+ * @param {(string | number)[] | undefined} path Ramda Path to nested prop
+ */ var $79a9f3d6fb5469bc$var$unset = function(namespace) {
+    return function(pathToProp) {
         if ((0, $f5c61003bc103344$export$2e2bcd8739ae039)(pathToProp)) {
             localStorage.removeItem(namespace);
-            (0, $d21870e548692df7$export$2e2bcd8739ae039)(namespace, null);
+            (0, $a2c4db6c02f8cb51$export$2e2bcd8739ae039)(namespace, null);
             return;
         }
-        const namespaceValue = (0, $61e6f04d30479333$export$2e2bcd8739ae039)(namespace)();
-        const newNamespaceValue = (0, $gXNCa$ramda.dissocPath)(pathToProp, namespaceValue);
-        (0, $b00c2e3bf3c1d813$export$2e2bcd8739ae039)(namespace)(newNamespaceValue);
+        var namespaceValue = (0, $64365f19cb59eeb0$export$2e2bcd8739ae039)(namespace)();
+        var newNamespaceValue = (0, $8zHUo$ramda.dissocPath)(pathToProp, namespaceValue);
+        (0, $bead50853ca58791$export$2e2bcd8739ae039)(namespace)(newNamespaceValue);
     };
-var $3b44343b1bf75e9f$export$2e2bcd8739ae039 = $3b44343b1bf75e9f$var$unset;
+};
+var $79a9f3d6fb5469bc$export$2e2bcd8739ae039 = $79a9f3d6fb5469bc$var$unset;
 
 
 
 /**
- * Interact with namespaced localStorage 
- * 
+ * Interact with namespaced localStorage
+ *
  * Emit storage events to other tabs
- */ const $4fa36e821943b400$var$useLocalStorage = (namespace, eventCb)=>{
-    (0, $gXNCa$react.useEffect)(()=>{
-        const onStore = (0, $ace534a17336fe4d$export$2e2bcd8739ae039)(eventCb);
+ */ var $fd046e7a82b9f872$var$useLocalStorage = function(namespace, eventCb) {
+    (0, $8zHUo$react.useEffect)(function() {
+        var onStore = (0, $3950ad88a2689f3e$export$2e2bcd8739ae039)(eventCb);
         window.addEventListener("storage", onStore);
-        return ()=>window.removeEventListener("storage", onStore);
+        return function() {
+            return window.removeEventListener("storage", onStore);
+        };
     }, []);
     return {
         /**
-     * Read a namespace in localStorage or a nested value at that namespace
-     * 
-     * @param {unknown} value parsed item value 
-     * @param {(string | number)[]} path Ramda Path to nested prop 
-     */ read: (0, $61e6f04d30479333$export$2e2bcd8739ae039)(namespace),
+        * Read a namespace in localStorage or a nested value at that namespace
+        *
+        * @param {unknown} value parsed item value
+        * @param {(string | number)[]} path Ramda Path to nested prop
+        */ read: (0, $64365f19cb59eeb0$export$2e2bcd8739ae039)(namespace),
         /**
-     * Set a namespace in localStorage or a nested value at that namespace
-     * 
-     * Emit the update to other tabs 
-     * 
-     * @param {unknown} value parsed item value 
-     * @param {(string | number)[]} path Ramda Path to set nested prop, or undefined to set namespace
-     */ update: (0, $b00c2e3bf3c1d813$export$2e2bcd8739ae039)(namespace),
+         * Set a namespace in localStorage or a nested value at that namespace
+         *
+         * Emit the update to other tabs
+         *
+         * @param {unknown} value parsed item value
+         * @param {(string | number)[]} path Ramda Path to set nested prop, or undefined to set namespace
+         */ update: (0, $bead50853ca58791$export$2e2bcd8739ae039)(namespace),
         /**
-     * Remove a namespace from localStorage or a nested value at that namespace
-     * 
-     * @param {(string | number)[] | undefined} path Ramda Path to nested prop  
-     */ unset: (0, $3b44343b1bf75e9f$export$2e2bcd8739ae039)(namespace)
+         * Remove a namespace from localStorage or a nested value at that namespace
+         *
+         * @param {(string | number)[] | undefined} path Ramda Path to nested prop
+         */ unset: (0, $79a9f3d6fb5469bc$export$2e2bcd8739ae039)(namespace)
     };
 };
-module.exports = $4fa36e821943b400$var$useLocalStorage;
+var $fd046e7a82b9f872$export$2e2bcd8739ae039 = $fd046e7a82b9f872$var$useLocalStorage;
 
 
 //# sourceMappingURL=index.js.map

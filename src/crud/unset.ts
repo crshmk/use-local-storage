@@ -3,7 +3,7 @@ import read from './read'
 import update from './update'
 
 import isAbsent from './isAbsent'
-import { dissocPath } from 'ramda'
+import { dissocPath, Path } from 'ramda'
 
 /**
  * Remove a namespace from localStorage or a nested value at that namespace
@@ -11,14 +11,14 @@ import { dissocPath } from 'ramda'
  * @param {string} namespace root key of localStorage
  * @param {(string | number)[] | undefined} path Ramda Path to nested prop  
  */
-const unset = namespace => pathToProp => {
+const unset = (namespace: string) => (pathToProp?: Path) => {
   if(isAbsent(pathToProp)) {
     localStorage.removeItem(namespace)
     emitStorageEvent(namespace, null)
     return 
   }
   const namespaceValue = read(namespace)()
-  const newNamespaceValue = dissocPath(pathToProp, namespaceValue)
+  const newNamespaceValue = dissocPath(pathToProp as Path, namespaceValue)
   update(namespace)(newNamespaceValue)
 }
 
