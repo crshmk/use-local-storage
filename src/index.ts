@@ -1,49 +1,69 @@
-import { useEffect, useRef, useState } from 'react'
-
-import initializeFromStorage from './initializeFromStorage'
-import onReceiveStorageEvent from './onReceiveStorageEvent'
-import setAndEmitValue from './setAndEmitValue'
-
-import stringify from 'pretty-format'
+import { useEffect } from 'react'
 import parse from 'unstring'
+import emitStorageEvent from './emitStorageEvent'
+import onReceiveStorageEvent from './onReceiveStorageEvent'
+
+const stringify = <T>(value: T) => {
+  try {
+    const stringifiedValue = JSON.stringify(value)
+    return stringifiedValue
+  } catch(e) {
+    return JSON.stringify({})
+  }
+}
 
 /**
- * React hook to interact with localStorage 
- * - Emits / receives storage events to / from other tabs 
+ * Set an item in localStorage
  * 
- * @param key string 
- * @param defaultValue T
- * @return [value ,setValue]
+ * Emit teh update to other tabs 
+ * 
+ * @param k string item key 
+ * @param v parsed item value 
  */
-const useLocalStorage = <T>(key: string, defaultValue: T): [T, React.Dispatch<React.SetStateAction<T>>] => {
+const update = <T>(k: string, v: T) => {
+  const stringifiedValue = stringify<T>(v)
+  localStorage.setItem(k, stringifiedValue)
+  emitStorageEvent(k, stringifiedValue)
+}
 
-  const [value, setValue] = useState<T>(defaultValue)
-  const prev = useRef<string>(null)
+/**
+ * Read an item from localStorage
+ * 
+ * @param k localStorage key
+ * @returns parsed item value 
+ */
+const read = <T>(k: string): T => {
+  const stringifiedValue = localStorage.getItem(k) || ''
+  return parse(stringifiedValue)
+}
 
+/**
+ * Remove an item from localStorage
+ * 
+ * @param k localStorage key 
+ */
+const remove = (k: string) => {
+  localStorage.removeItem(k)
+  emitStorageEvent(k, '')
+}
+
+/**
+ * Interact with localStorage 
+ * 
+ * Emit storage events to other tabs
+ */
+const useLocalStorage = <T, Cb extends Function>(cb: Cb) => () => {
   useEffect(() => {
-    const storedValue: string = window.localStorage.getItem(key) as string 
-    const parsedValue = parse(storedValue)
-    const newValue = parsedValue || defaultValue 
-    const stringifiedValue = JSON.stringify(newValue)
-    localStorage.setItem(key, stringifiedValue)
-    setAndEmitValue<T>(key, stringifiedValue)
-    prev.current = stringifiedValue
+    const receieveEvent = onReceiveStorageEvent<T>(cb)
+    window.addEventListener("storage", receieveEvent)
+    return () => window.removeEventListener("storage", receieveEvent)
   }, [])
 
-  useEffect(() => {
-    const stringifiedValue = JSON.stringify(value) 
-    if(stringifiedValue === prev.current) return    
-    setAndEmitValue<T>(key, stringifiedValue)
-    prev.current = stringifiedValue
-  }, [value])
-  
-  useEffect(() => {
-    const onSetStorage = onReceiveStorageEvent(setValue, defaultValue)
-    window.addEventListener("storage", onSetStorage)
-    return () => window.removeEventListener("storage", onSetStorage)
-  }, [key])
-
-  return [value, setValue]
+  return {
+    read: (k: string) => read<T>(k),
+    update: (k: string, value: T) => update<T>(k, value),
+    remove
+  }
 }
 
 export default useLocalStorage

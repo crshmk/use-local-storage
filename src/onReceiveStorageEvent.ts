@@ -9,19 +9,14 @@ type StateSetter<T> = React.Dispatch<React.SetStateAction<T>>
  * @param defaultValue T
  * @returns void
  */
-const onReceiveStorageEvent = <T>(setValue: StateSetter<T>, defaultValue: T) => (e: StorageEvent) => {
-
+const onReceiveStorageEvent = <T>(cb: Function) => (e: StorageEvent) => {
+   
   if(!e.newValue) {
-    setValue(defaultValue)
     return 
-  }
+  }  
 
   const newValue: T = parse(e.newValue)
-
-  console.log('received event', newValue)
-  return 
-  
-  setValue(newValue)
+  cb(newValue)
 }
 
 export default onReceiveStorageEvent

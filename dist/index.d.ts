@@ -1,12 +1,13 @@
 /**
- * React hook to interact with localStorage
- * - Emits / receives storage events to / from other tabs
+ * Interact with localStorage
  *
- * @param key string
- * @param defaultValue T
- * @return [value ,setValue]
+ * Emit storage events to other tabs
  */
-declare const useLocalStorage: <T>(key: string, defaultValue: T) => [T, React.Dispatch<React.SetStateAction<T>>];
+declare const useLocalStorage: <T, Cb extends Function>(cb: Cb) => {
+    read: (k: string) => T;
+    update: (k: string, value: T) => void;
+    remove: (k: string) => void;
+};
 export default useLocalStorage;
 
 //# sourceMappingURL=index.d.ts.map
