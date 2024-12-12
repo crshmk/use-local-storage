@@ -1,5 +1,6 @@
 import parse from 'unstring'
 import isAbsent from './isAbsent'
+import { path } from 'ramda'
 
 /**
  * Read an namespace in localStorage or a nested value at that namespace

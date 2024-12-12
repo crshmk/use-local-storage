@@ -15,7 +15,9 @@ const receiveStorageEvent = cb => e => {
   }  
 
   const newValue = parse(e.newValue)
-  cb(newValue)
+  if (newValue !== undefined) {
+    cb(newValue)
+  }
 }
 
 export default receiveStorageEvent
