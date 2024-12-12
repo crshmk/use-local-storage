@@ -8,6 +8,7 @@ import parse from 'unstring'
  * @returns void
  */
 const receiveStorageEvent = cb => e => {
+  if(typeof cb !== 'function') return 
    
   if(!e.newValue) {
     return 
