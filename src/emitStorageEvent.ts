@@ -1,21 +1,20 @@
+/*
 type StorageEventConfig = {
   storageArea: Storage 
   url: string 
   key: string 
   newValue?: string 
 }
+*/
 
-const emitStorageEvent = (key: string, stringifiedValue?: string) => {
-  const config: StorageEventConfig = {
+const emitStorageEvent = (key, stringifiedValue) => {
+  const config = {
     storageArea: window.localStorage,
     url: window.location.href,
-    key
+    key,
+    newValue: stringifiedValue
   }
   
-  if(stringifiedValue !== undefined) {
-    config.newValue = stringifiedValue
-  }
-
   const storageEvent = new StorageEvent("storage", config)
   window.dispatchEvent(storageEvent)
 }

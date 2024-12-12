@@ -3,22 +3,19 @@
   "version": "0.0.1",
   "description": "",
   "main": "dist/index.js",
-  "types": "dist/index.d.ts",
   "scripts": {
-    "build": "parcel build src/index.ts",
-    "build:types": "tsc --emitDeclarationOnly --declaration --outDir dist"
+    "build": "rm -rf dist && parcel build src/index.js",
+    "watch": "rm -rf dist && parcel watch src/index.js"
   },
   "repository": "crshmk/parcel-ts",
   "keywords": [],
   "author": "",
   "license": "ISC",
   "peerDependencies": {
+    "ramda": ">=0.30.0",
     "react": ">=16.8.0"
   },
   "devDependencies": {
-    "@parcel/packager-ts": "^2.13.2",
-    "@parcel/transformer-typescript-tsc": "^2.13.2",
-    "@parcel/transformer-typescript-types": "^2.13.2",
     "@types/ramda": "^0.30.2",
     "@types/react": "^19.0.1",
     "parcel": "^2.13.2",
