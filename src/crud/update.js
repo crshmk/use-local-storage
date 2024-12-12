@@ -24,6 +24,7 @@ const stringify = value => {
 const update = namespace => (value, path) => {
   const currentNamespace = read(namespace)()
   const updatedNamespaceValue = isNil(path) ? value : set(lensPath(path), value, currentNamespace)
+  if(!updatedNamespaceValue) return 
   const stringifiedNamespace = stringify(updatedNamespaceValue)
   localStorage.setItem(namespace, stringifiedNamespace)
   emitStorageEvent(namespace, stringifiedNamespace)
