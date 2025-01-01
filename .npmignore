@@ -1,0 +1,10 @@
+.git/
+src/
+test/
+node_modules/
+package-lock.json
+.parcel-cache
+.babelrc 
+tsconfig.json
+jest.config.js 
+.parcelrc 
