@@ -7,7 +7,7 @@ import parse from 'unstring'
  * @param defaultValue T
  * @returns void
  */
-const receiveStorageEvent = cb => e => {
+const receiveStorageEvent = (cb?: Function) => (e: StorageEvent) => {
   if(typeof cb !== 'function') return 
    
   if(!e.newValue) {
