@@ -60,7 +60,12 @@ import useLs from 'use-ls'
 
 import { append } from 'ramda' 
 
-const mockOrders = [ 
+type Order = {
+  orderId: string 
+  orderItems: {name: string}[]
+}
+
+const mockOrders: Order[] = [ 
   { orderId: '', orderItems: [{name: 'order1'}] } 
 ]
 
@@ -70,14 +75,14 @@ const useOrders = () => {
 
   const addOrder = (newOrder: Order) => {
     setOrders(append(newOrder))
-    ordersStorage.update(append(newOrder), orders)
+    ordersStorage.update(append(newOrder, orders))
   }
 
-  const getStoredItem = (orderIndex: number) => 
-    ordersStorage.read<Order>([itemIndex])
+  const getStoredOrder = (orderIndex: number) => 
+    ordersStorage.read<Order>([orderIndex])
 
   const getStoredOrderName = (orderIndex: number, itemIndex: number) => 
-    ordersStorage.read<string>([itemIndex, 'orderItems', itemIndex, 'name'])
+    ordersStorage.read<string>([orderIndex, 'orderItems', itemIndex, 'name'])
 
   useEffect(() => {
     // storedOrders is typed as Order[]
@@ -89,7 +94,7 @@ const useOrders = () => {
 
   return {
     addOrder,
-    getStoredItem,
+    getStoredOrder,
     getStoredOrderName,
     orders, 
     ordersStorage,
