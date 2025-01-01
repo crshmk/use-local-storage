@@ -1,9 +1,9 @@
-## React hook for localStorage
+## `localStorage` React hook
 
-- every namespace with this localStorage hook is an object or array; not for primitives at the root 
-- update, read, or unset a namespace (e.g. `'user'`) or a nested prop (e.g. `user.preferences.isDarkMode`) with a [path](https://ramdajs.com/docs/#path)
-- values are stringified (in) / parsed (out)
-- undefined values for the root (e.g. `'user'`) return as an empty object or array
+- Every namespace with this localStorage hook is an object or array; not for primitives at the root.
+- `update`, `read`, or `unset` a namespace (e.g. `'user'`) or a nested prop (e.g. `user.preferences.isDarkMode`) with a [path](https://ramdajs.com/docs/#path).
+- Values are stringified (in) / parsed (out).
+- When parsing fails when retrieving the root (e.g. `'user'`), or when this value is not an object or an array, an object is [returned](https://github.com/crshmk/use-local-storage/blob/6242662d944ba2e9bb5f3d5a96ceaeda4972870b/src/parse/__tests__/unstring.test.js#L38). Malformed [arrays](https://github.com/crshmk/use-local-storage/blob/6242662d944ba2e9bb5f3d5a96ceaeda4972870b/src/parse/__tests__/unstring.test.js#L27) return an empty array. I prefer [emptiness](https://github.com/crshmk/utils?tab=readme-ov-file#isabsent) to truthiness. 
 
 ---
 
@@ -34,10 +34,11 @@ type User = {
 const userStorage = useLs<User>('user')
 
 // get the entire user 
-// return value typed as User 
+// typed as User
 userStorge.read()
 
 // get the name of the first preference 
+// nested props should pass a type
 userStorage.read<string>(['preferences', 0, 'name'])
 
 // update that preference 
@@ -58,8 +59,6 @@ userStorage.unset()
 ```javascript 
 import useLs from 'use-ls'
 
-import { append } from 'ramda' 
-
 type Order = {
   orderId: string 
   orderItems: {name: string}[]
@@ -74,8 +73,14 @@ const useOrders = () => {
   const ordersStorage = useLs<Order[]>('orders')
 
   const addOrder = (newOrder: Order) => {
-    setOrders(append(newOrder))
-    ordersStorage.update(append(newOrder, orders))
+    const newOrders = [...orders, newOrder]
+    setOrders(newOrders)
+    ordersStorage.update(newOrders)
+  }
+
+   const clearOrders = () => {
+    setOrders([])
+    ordersStorage.unset()
   }
 
   const getStoredOrder = (orderIndex: number) => 
@@ -85,7 +90,6 @@ const useOrders = () => {
     ordersStorage.read<string>([orderIndex, 'orderItems', itemIndex, 'name'])
 
   useEffect(() => {
-    // storedOrders is typed as Order[]
     const storedOrders = ordersStorage.read()
     if(Array.isArray(storedOrders)) {
       setOrders(storedOrders)
@@ -94,6 +98,7 @@ const useOrders = () => {
 
   return {
     addOrder,
+    clearOrders,
     getStoredOrder,
     getStoredOrderName,
     orders, 

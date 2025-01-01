@@ -16,7 +16,8 @@
     "localStorage",
     "react",
     "hook",
-    "ramda"
+    "ramda",
+    "useLocalStorage"
   ],
   "author": "",
   "license": "ISC",
