@@ -1,49 +1,166 @@
-import {useEffect as $5OpyM$useEffect} from "react";
-import $5OpyM$unstring from "unstring";
-import {path as $5OpyM$path, anyPass as $5OpyM$anyPass, isEmpty as $5OpyM$isEmpty, isNil as $5OpyM$isNil, dissocPath as $5OpyM$dissocPath, set as $5OpyM$set, lensPath as $5OpyM$lensPath} from "ramda";
+import * as $hgUW1$unstring from "unstring";
+import {path as $hgUW1$path, anyPass as $hgUW1$anyPass, isEmpty as $hgUW1$isEmpty, isNil as $hgUW1$isNil, dissocPath as $hgUW1$dissocPath, set as $hgUW1$set, lensPath as $hgUW1$lensPath} from "ramda";
+import {useEffect as $hgUW1$useEffect} from "react";
 
 
+      var $parcel$global = globalThis;
+    
+var $parcel$modules = {};
+var $parcel$inits = {};
 
+var parcelRequire = $parcel$global["parcelRequire94c2"];
+
+if (parcelRequire == null) {
+  parcelRequire = function(id) {
+    if (id in $parcel$modules) {
+      return $parcel$modules[id].exports;
+    }
+    if (id in $parcel$inits) {
+      var init = $parcel$inits[id];
+      delete $parcel$inits[id];
+      var module = {id: id, exports: {}};
+      $parcel$modules[id] = module;
+      init.call(module.exports, module, module.exports);
+      return module.exports;
+    }
+    var err = new Error("Cannot find module '" + id + "'");
+    err.code = 'MODULE_NOT_FOUND';
+    throw err;
+  };
+
+  parcelRequire.register = function register(id, init) {
+    $parcel$inits[id] = init;
+  };
+
+  $parcel$global["parcelRequire94c2"] = parcelRequire;
+}
+
+var parcelRegister = parcelRequire.register;
+parcelRegister("8pqOU", function(module, exports) {
+"use strict";
+Object.defineProperty(module.exports, "__esModule", {
+    value: true
+});
+module.exports.default = void 0;
+
+var $61f57676a9396065$var$_unstring = $61f57676a9396065$var$_interopRequireDefault($hgUW1$unstring);
+function $61f57676a9396065$var$_interopRequireDefault(e) {
+    return e && e.__esModule ? e : {
+        default: e
+    };
+}
 /**
  * Update the state of this tab when another tab emits a storage event
- * 
+ *
  * @param cb callback handed the parsed value of the namespace
  * @param defaultValue T
  * @returns void
- */ const $9b7f76fccb49fc21$var$receiveStorageEvent = (cb)=>(e)=>{
+ */ const $61f57676a9396065$var$receiveStorageEvent = (cb)=>(e)=>{
         if (typeof cb !== 'function') return;
         if (!e.newValue) return;
-        const newValue = (0, $5OpyM$unstring)(e.newValue);
+        const newValue = (0, $61f57676a9396065$var$_unstring.default)(e.newValue);
         if (newValue !== undefined) cb(newValue);
     };
-var $9b7f76fccb49fc21$export$2e2bcd8739ae039 = $9b7f76fccb49fc21$var$receiveStorageEvent;
+var $61f57676a9396065$var$_default = module.exports.default = $61f57676a9396065$var$receiveStorageEvent;
 
+});
 
+parcelRegister("2Sukv", function(module, exports) {
+"use strict";
+Object.defineProperty(module.exports, "__esModule", {
+    value: true
+});
+module.exports.default = void 0;
 
+var $218826c4266cf93d$var$_unstring = $218826c4266cf93d$var$_interopRequireDefault($hgUW1$unstring);
 
-var $549131179abf8a03$export$2e2bcd8739ae039 = (0, $5OpyM$anyPass)([
-    (0, $5OpyM$isEmpty),
-    (0, $5OpyM$isNil)
-]);
+var $218826c4266cf93d$var$_isAbsent = $218826c4266cf93d$var$_interopRequireDefault((parcelRequire("eUEg6")));
 
-
-
-/**
- * Read an namespace in localStorage or a nested value at that namespace
- * 
- * @param {string} namespace root key of localStorage
- * @param {unknown} value parsed item value 
- * @param {(string | number)[] | undefined} path Ramda Path to nested prop 
- */ const $c4b13e930bba782b$var$read = (namespace)=>(pathToProp)=>{
-        const stringifiedNamespace = localStorage.getItem(namespace) || '';
-        if ((0, $549131179abf8a03$export$2e2bcd8739ae039)(stringifiedNamespace)) return undefined;
-        const parsedNamespace = (0, $5OpyM$unstring)(stringifiedNamespace);
-        return (0, $549131179abf8a03$export$2e2bcd8739ae039)(pathToProp) ? parsedNamespace : (0, $5OpyM$path)(pathToProp, parsedNamespace);
+function $218826c4266cf93d$var$_interopRequireDefault(e) {
+    return e && e.__esModule ? e : {
+        default: e
     };
-var $c4b13e930bba782b$export$2e2bcd8739ae039 = $c4b13e930bba782b$var$read;
+}
+/**
+ * TypeScript requires such a mess
+ */ /**
+ * Read an namespace in localStorage or a nested value at that namespace
+ *
+ * @param {string} namespace root key of localStorage
+ * @param {unknown} value parsed item value
+ * @param {(string | number)[] | undefined} path Ramda Path to nested prop
+ */ const $218826c4266cf93d$var$read = (namespace)=>{
+    return (pathToProp)=>{
+        const stringifiedNamespace = localStorage.getItem(namespace) || '';
+        if ((0, $218826c4266cf93d$var$_isAbsent.default)(stringifiedNamespace)) return undefined;
+        const parsedNamespace = (0, $218826c4266cf93d$var$_unstring.default)(stringifiedNamespace);
+        return !pathToProp ? parsedNamespace : (0, $hgUW1$path)(pathToProp, parsedNamespace);
+    };
+};
+var $218826c4266cf93d$var$_default = module.exports.default = $218826c4266cf93d$var$read;
+
+});
+parcelRegister("eUEg6", function(module, exports) {
+"use strict";
+Object.defineProperty(module.exports, "__esModule", {
+    value: true
+});
+module.exports.default = void 0;
+
+const $adb58637f2755f63$var$isAbsent = (0, $hgUW1$anyPass)([
+    $hgUW1$isEmpty,
+    $hgUW1$isNil
+]);
+var $adb58637f2755f63$var$_default = module.exports.default = $adb58637f2755f63$var$isAbsent;
+
+});
 
 
-const $6b2a688232110846$var$emitStorageEvent = (key, stringifiedValue)=>{
+parcelRegister("7h6SQ", function(module, exports) {
+"use strict";
+Object.defineProperty(module.exports, "__esModule", {
+    value: true
+});
+module.exports.default = void 0;
+
+var $54bf75e0ecf09f50$var$_emitStorageEvent = $54bf75e0ecf09f50$var$_interopRequireDefault((parcelRequire("5gnDZ")));
+
+var $54bf75e0ecf09f50$var$_read = $54bf75e0ecf09f50$var$_interopRequireDefault((parcelRequire("2Sukv")));
+
+var $54bf75e0ecf09f50$var$_update = $54bf75e0ecf09f50$var$_interopRequireDefault((parcelRequire("s30dk")));
+
+var $54bf75e0ecf09f50$var$_isAbsent = $54bf75e0ecf09f50$var$_interopRequireDefault((parcelRequire("eUEg6")));
+
+function $54bf75e0ecf09f50$var$_interopRequireDefault(e) {
+    return e && e.__esModule ? e : {
+        default: e
+    };
+}
+/**
+ * Remove a namespace from localStorage or a nested value at that namespace
+ *
+ * @param {string} namespace root key of localStorage
+ * @param {(string | number)[] | undefined} path Ramda Path to nested prop
+ */ const $54bf75e0ecf09f50$var$unset = (namespace)=>(pathToProp)=>{
+        if ((0, $54bf75e0ecf09f50$var$_isAbsent.default)(pathToProp)) {
+            localStorage.removeItem(namespace);
+            (0, $54bf75e0ecf09f50$var$_emitStorageEvent.default)(namespace, null);
+            return;
+        }
+        const namespaceValue = (0, $54bf75e0ecf09f50$var$_read.default)(namespace)();
+        const newNamespaceValue = (0, $hgUW1$dissocPath)(pathToProp, namespaceValue);
+        (0, $54bf75e0ecf09f50$var$_update.default)(namespace)(newNamespaceValue);
+    };
+var $54bf75e0ecf09f50$var$_default = module.exports.default = $54bf75e0ecf09f50$var$unset;
+
+});
+parcelRegister("5gnDZ", function(module, exports) {
+"use strict";
+Object.defineProperty(module.exports, "__esModule", {
+    value: true
+});
+module.exports.default = void 0;
+const $3d50c98fd8d027f6$var$emitStorageEvent = (key, stringifiedValue)=>{
     const config = {
         storageArea: window.localStorage,
         url: window.location.href,
@@ -53,14 +170,29 @@ const $6b2a688232110846$var$emitStorageEvent = (key, stringifiedValue)=>{
     const storageEvent = new StorageEvent("storage", config);
     window.dispatchEvent(storageEvent);
 };
-var $6b2a688232110846$export$2e2bcd8739ae039 = $6b2a688232110846$var$emitStorageEvent;
+var $3d50c98fd8d027f6$var$_default = module.exports.default = $3d50c98fd8d027f6$var$emitStorageEvent;
+
+});
+
+parcelRegister("s30dk", function(module, exports) {
+"use strict";
+Object.defineProperty(module.exports, "__esModule", {
+    value: true
+});
+module.exports.default = void 0;
+
+var $0544f1dd1025833f$var$_emitStorageEvent = $0544f1dd1025833f$var$_interopRequireDefault((parcelRequire("5gnDZ")));
+
+var $0544f1dd1025833f$var$_read = $0544f1dd1025833f$var$_interopRequireDefault((parcelRequire("2Sukv")));
 
 
-
-
-
-
-const $c2bba2b3d93255a5$var$stringify = (value)=>{
+var $0544f1dd1025833f$var$_isAbsent = $0544f1dd1025833f$var$_interopRequireDefault((parcelRequire("eUEg6")));
+function $0544f1dd1025833f$var$_interopRequireDefault(e) {
+    return e && e.__esModule ? e : {
+        default: e
+    };
+}
+const $0544f1dd1025833f$var$stringify = (value)=>{
     try {
         const stringifiedValue = JSON.stringify(value);
         return stringifiedValue;
@@ -70,78 +202,120 @@ const $c2bba2b3d93255a5$var$stringify = (value)=>{
 };
 /**
  * Set an namespace in localStorage or a nested value at that namespace
- * 
- * Emit the update to other tabs 
- * 
+ *
+ * Emit the update to other tabs
+ *
  * @param {string} namespace root key of localStorage
- * @param {unknown} value parsed item value 
- * @param {(string | number)[] | undefined} path Ramda Path to nested prop 
- */ const $c2bba2b3d93255a5$var$update = (namespace)=>(value, path)=>{
-        const currentNamespace = (0, $c4b13e930bba782b$export$2e2bcd8739ae039)(namespace)();
-        const updatedNamespaceValue = (0, $5OpyM$isNil)(path) ? value : (0, $5OpyM$set)((0, $5OpyM$lensPath)(path), value, currentNamespace);
-        if (!updatedNamespaceValue) return;
-        const stringifiedNamespace = $c2bba2b3d93255a5$var$stringify(updatedNamespaceValue);
+ * @param {unknown} value parsed item value
+ * @param {(string | number)[] | undefined} path Ramda Path to nested prop
+ */ const $0544f1dd1025833f$var$update = (namespace)=>(value, path)=>{
+        const currentNamespace = (0, $0544f1dd1025833f$var$_read.default)(namespace)();
+        const updatedNamespaceValue = (0, $hgUW1$isNil)(path) ? value : (0, $hgUW1$set)((0, $hgUW1$lensPath)(path), value, currentNamespace);
+        const stringifiedNamespace = $0544f1dd1025833f$var$stringify(updatedNamespaceValue);
+        if ((0, $0544f1dd1025833f$var$_isAbsent.default)(stringifiedNamespace)) return;
         localStorage.setItem(namespace, stringifiedNamespace);
-        (0, $6b2a688232110846$export$2e2bcd8739ae039)(namespace, stringifiedNamespace);
+        (0, $0544f1dd1025833f$var$_emitStorageEvent.default)(namespace, stringifiedNamespace);
     };
-var $c2bba2b3d93255a5$export$2e2bcd8739ae039 = $c2bba2b3d93255a5$var$update;
+var $0544f1dd1025833f$var$_default = module.exports.default = $0544f1dd1025833f$var$update;
+
+});
 
 
+var $2df9d79b6788b58e$exports = {};
+"use strict";
+Object.defineProperty($2df9d79b6788b58e$exports, "__esModule", {
+    value: true
+});
+$2df9d79b6788b58e$exports.default = void 0;
 
 
-/**
- * Remove a namespace from localStorage or a nested value at that namespace
- * 
- * @param {string} namespace root key of localStorage
- * @param {(string | number)[] | undefined} path Ramda Path to nested prop  
- */ const $c6822cb7ad739229$var$unset = (namespace)=>(pathToProp)=>{
-        if ((0, $549131179abf8a03$export$2e2bcd8739ae039)(pathToProp)) {
-            localStorage.removeItem(namespace);
-            (0, $6b2a688232110846$export$2e2bcd8739ae039)(namespace, null);
-            return;
-        }
-        const namespaceValue = (0, $c4b13e930bba782b$export$2e2bcd8739ae039)(namespace)();
-        const newNamespaceValue = (0, $5OpyM$dissocPath)(pathToProp, namespaceValue);
-        (0, $c2bba2b3d93255a5$export$2e2bcd8739ae039)(namespace)(newNamespaceValue);
+var $2df9d79b6788b58e$var$_receiveStorageEvent = $2df9d79b6788b58e$var$_interopRequireDefault((parcelRequire("8pqOU")));
+
+var $2df9d79b6788b58e$var$_read = $2df9d79b6788b58e$var$_interopRequireDefault((parcelRequire("2Sukv")));
+
+var $2df9d79b6788b58e$var$_unset = $2df9d79b6788b58e$var$_interopRequireDefault((parcelRequire("7h6SQ")));
+
+var $2df9d79b6788b58e$var$_update = $2df9d79b6788b58e$var$_interopRequireDefault((parcelRequire("s30dk")));
+function $2df9d79b6788b58e$var$_interopRequireDefault(e) {
+    return e && e.__esModule ? e : {
+        default: e
     };
-var $c6822cb7ad739229$export$2e2bcd8739ae039 = $c6822cb7ad739229$var$unset;
-
-
-
+}
 /**
- * Interact with namespaced localStorage 
- * 
+ * Interact with namespaced localStorage
+ *
  * Emit storage events to other tabs
- */ const $cf838c15c8b009ba$var$useLocalStorage = (namespace, eventCb)=>{
-    (0, $5OpyM$useEffect)(()=>{
-        const onStore = (0, $9b7f76fccb49fc21$export$2e2bcd8739ae039)(eventCb);
-        window.addEventListener("storage", onStore);
-        return ()=>window.removeEventListener("storage", onStore);
+ */ const $2df9d79b6788b58e$var$useLocalStorage = (namespace, eventCb)=>{
+    (0, $hgUW1$useEffect)(()=>{
+        const onStore = (0, $2df9d79b6788b58e$var$_receiveStorageEvent.default)(eventCb);
+        window.addEventListener('storage', onStore);
+        return ()=>window.removeEventListener('storage', onStore);
     }, []);
     return {
         /**
     * Read a namespace in localStorage or a nested value at that namespace
-    * 
-    * @param {unknown} value parsed item value 
-    * @param {(string | number)[]} path Ramda Path to nested prop 
-    */ read: (0, $c4b13e930bba782b$export$2e2bcd8739ae039)(namespace),
+    *
+    * @param {unknown} value parsed item value
+    * @param {(string | number)[]} path Ramda Path to nested prop
+    * @returns value in localStorage at path
+    *
+    * @example
+    *   get the value at localStorage.user.preferences.isDarkMode
+    *  ```
+    *   const userStorage = useLocalStorage('user')
+    *
+    *   userStorage.read<boolean>(['preferences', 'isDarkMode'])
+    * ```
+    *
+    * get the entire user
+    * ```
+    *   userStorage.read()
+    * ```
+    *
+    */ read: (0, $2df9d79b6788b58e$var$_read.default)(namespace),
+        //as <NamespaceType>(namespace: any) => <ValueType>(pathToProp?: (string | number)[]) => NamespaceType | ValueType | undefined,
         /**
-    * Set a namespace in localStorage or a nested value at that namespace
-    * 
-    * Emit the update to other tabs 
-    * 
-    * @param {unknown} value parsed item value 
-    * @param {(string | number)[]} path Ramda Path to set nested prop, or undefined to set namespace
-    */ update: (0, $c2bba2b3d93255a5$export$2e2bcd8739ae039)(namespace),
+     * Set a namespace in localStorage or a nested value at that namespace
+     *
+     * Emit the update to other tabs
+     *
+     * @param {unknown} value parsed item value
+     * @param {(string | number)[]} path Ramda Path to set nested prop, or undefined to set namespace
+     * @return void
+     * @example
+     *   set `user.preferences.isDarkMode`
+     * ```
+     *   const userStorage = useLocalStorage<User>('user')
+     *
+     *   userStorage.update<boolean>(['preferences', 'isDarkMode'], true)
+     * ```
+     * update entire user
+     * ```
+     *   userStorage.update<User>(newUser)
+     * ```
+     *
+     */ update: (0, $2df9d79b6788b58e$var$_update.default)(namespace),
         /**
      * Remove a namespace from localStorage or a nested value at that namespace
-     * 
-     * @param {(string | number)[] | undefined} path Ramda Path to nested prop  
-     */ unset: (0, $c6822cb7ad739229$export$2e2bcd8739ae039)(namespace)
+     *
+     * @param {(string | number)[] | undefined} path Ramda Path to nested prop
+     * @example
+     * remove preferences from storage
+     * ```
+     *   const userStorage = useLocalStorage<User>('user')
+     *
+     *   userStorage.unset(['preferences', 'isDarkMode'])
+     * ```
+     * remove the entire user from storage
+     * ```
+     *   userStorage.unset()
+     * ```
+     *
+     */ unset: (0, $2df9d79b6788b58e$var$_unset.default)(namespace)
     };
 };
-var $cf838c15c8b009ba$export$2e2bcd8739ae039 = $cf838c15c8b009ba$var$useLocalStorage;
+var $2df9d79b6788b58e$var$_default = $2df9d79b6788b58e$exports.default = $2df9d79b6788b58e$var$useLocalStorage;
 
 
-export {$cf838c15c8b009ba$export$2e2bcd8739ae039 as default};
+export {$2df9d79b6788b58e$exports as default};
 //# sourceMappingURL=index.js.map
