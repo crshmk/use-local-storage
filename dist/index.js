@@ -141,7 +141,8 @@ function $54bf75e0ecf09f50$var$_interopRequireDefault(e) {
  *
  * @param {string} namespace root key of localStorage
  * @param {(string | number)[] | undefined} path Ramda Path to nested prop
- */ const $54bf75e0ecf09f50$var$unset = (namespace)=>(pathToProp)=>{
+ */ const $54bf75e0ecf09f50$var$unset = (namespace)=>{
+    return (pathToProp)=>{
         if ((0, $54bf75e0ecf09f50$var$_isAbsent.default)(pathToProp)) {
             localStorage.removeItem(namespace);
             (0, $54bf75e0ecf09f50$var$_emitStorageEvent.default)(namespace, null);
@@ -151,6 +152,7 @@ function $54bf75e0ecf09f50$var$_interopRequireDefault(e) {
         const newNamespaceValue = (0, $hgUW1$dissocPath)(pathToProp, namespaceValue);
         (0, $54bf75e0ecf09f50$var$_update.default)(namespace)(newNamespaceValue);
     };
+};
 var $54bf75e0ecf09f50$var$_default = module.exports.default = $54bf75e0ecf09f50$var$unset;
 
 });
@@ -208,7 +210,8 @@ const $0544f1dd1025833f$var$stringify = (value)=>{
  * @param {string} namespace root key of localStorage
  * @param {unknown} value parsed item value
  * @param {(string | number)[] | undefined} path Ramda Path to nested prop
- */ const $0544f1dd1025833f$var$update = (namespace)=>(value, path)=>{
+ */ const $0544f1dd1025833f$var$update = (namespace)=>{
+    return (value, path)=>{
         const currentNamespace = (0, $0544f1dd1025833f$var$_read.default)(namespace)();
         const updatedNamespaceValue = (0, $hgUW1$isNil)(path) ? value : (0, $hgUW1$set)((0, $hgUW1$lensPath)(path), value, currentNamespace);
         const stringifiedNamespace = $0544f1dd1025833f$var$stringify(updatedNamespaceValue);
@@ -216,6 +219,7 @@ const $0544f1dd1025833f$var$stringify = (value)=>{
         localStorage.setItem(namespace, stringifiedNamespace);
         (0, $0544f1dd1025833f$var$_emitStorageEvent.default)(namespace, stringifiedNamespace);
     };
+};
 var $0544f1dd1025833f$var$_default = module.exports.default = $0544f1dd1025833f$var$update;
 
 });
