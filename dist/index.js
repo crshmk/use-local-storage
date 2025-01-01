@@ -1,7 +1,41 @@
 import {useEffect as $hgUW1$useEffect} from "react";
-import $hgUW1$unstring from "unstring";
 import {path as $hgUW1$path, anyPass as $hgUW1$anyPass, isEmpty as $hgUW1$isEmpty, isNil as $hgUW1$isNil, dissocPath as $hgUW1$dissocPath, set as $hgUW1$set, lensPath as $hgUW1$lensPath} from "ramda";
 
+
+// value !== value -> NaN check
+/**
+ * Excludes the following from parsing:
+ *  string, number, boolean, null, undefined, symbol NaN, function, bigint.
+ *
+ * Approves objects and arrays for parsing
+ *
+ * @param value any
+ * @returns boolean
+ */ const $89a0fa61e249632e$var$isObjectOrArray = (value)=>typeof value === 'object' && value !== null;
+var $89a0fa61e249632e$export$2e2bcd8739ae039 = $89a0fa61e249632e$var$isObjectOrArray;
+
+
+/**
+ * Safely parse jason without explicit try / catch
+ *
+ * Always returns an object or array
+ * - primitives, null, etc return an empty object
+ * - malformed objects return an empty object
+ * - malfomred arrays return an empty array
+ *
+ * @param json
+ * @returns object or array
+ */ const $def2aa2b8a848888$var$parse = (json)=>{
+    let parsed = {};
+    try {
+        parsed = JSON.parse(json);
+        return (0, $89a0fa61e249632e$export$2e2bcd8739ae039)(parsed) ? parsed : {};
+    } catch (e) {
+        if (typeof json === 'string' && json.length > 0 && json.charAt(0) === '[') return [];
+        return parsed;
+    }
+};
+var $def2aa2b8a848888$export$2e2bcd8739ae039 = $def2aa2b8a848888$var$parse;
 
 
 /**
@@ -13,7 +47,7 @@ import {path as $hgUW1$path, anyPass as $hgUW1$anyPass, isEmpty as $hgUW1$isEmpt
  */ const $61f57676a9396065$var$receiveStorageEvent = (cb)=>(e)=>{
         if (typeof cb !== 'function') return;
         if (!e.newValue) return;
-        const newValue = (0, $hgUW1$unstring)(e.newValue);
+        const newValue = (0, $def2aa2b8a848888$export$2e2bcd8739ae039)(e.newValue);
         if (newValue !== undefined) cb(newValue);
     };
 var $61f57676a9396065$export$2e2bcd8739ae039 = $61f57676a9396065$var$receiveStorageEvent;
@@ -22,12 +56,12 @@ var $61f57676a9396065$export$2e2bcd8739ae039 = $61f57676a9396065$var$receiveStor
 /**
  * TypeScript requires such a mess
  */ 
-
 const $adb58637f2755f63$var$isAbsent = (0, $hgUW1$anyPass)([
     (0, $hgUW1$isEmpty),
     (0, $hgUW1$isNil)
 ]);
 var $adb58637f2755f63$export$2e2bcd8739ae039 = $adb58637f2755f63$var$isAbsent;
+
 
 
 
@@ -41,7 +75,7 @@ var $adb58637f2755f63$export$2e2bcd8739ae039 = $adb58637f2755f63$var$isAbsent;
     return (pathToProp)=>{
         const stringifiedNamespace = localStorage.getItem(namespace) || '';
         if ((0, $adb58637f2755f63$export$2e2bcd8739ae039)(stringifiedNamespace)) return undefined;
-        const parsedNamespace = (0, $hgUW1$unstring)(stringifiedNamespace);
+        const parsedNamespace = (0, $def2aa2b8a848888$export$2e2bcd8739ae039)(stringifiedNamespace);
         return !pathToProp ? parsedNamespace : (0, $hgUW1$path)(pathToProp, parsedNamespace);
     };
 };

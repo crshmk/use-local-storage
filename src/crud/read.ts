@@ -1,8 +1,8 @@
 /**
  * TypeScript requires such a mess 
  */
-import parse from 'unstring'
 import isAbsent from './isAbsent'
+import parse from '../parse'
 import { path, Path } from 'ramda'
 
 /**
