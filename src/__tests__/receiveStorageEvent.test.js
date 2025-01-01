@@ -1,7 +1,7 @@
 import receiveStorageEvent from '../receiveStorageEvent'
-import parse from 'unstring'
+import parse from '../parse'
 
-jest.mock('unstring', () => jest.fn())
+jest.mock('parse', () => jest.fn())
 
 describe('receiveStorageEvent', () => {
   let callback

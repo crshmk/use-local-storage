@@ -1,4 +1,4 @@
-import parse from 'unstring'
+import parse from './parse'
 
 /**
  * Update the state of this tab when another tab emits a storage event
