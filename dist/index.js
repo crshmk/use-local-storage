@@ -44,11 +44,10 @@ var $def2aa2b8a848888$export$2e2bcd8739ae039 = $def2aa2b8a848888$var$parse;
  * @param cb callback handed the parsed value of the namespace
  * @param defaultValue T
  * @returns void
- */ const $61f57676a9396065$var$receiveStorageEvent = (cb)=>(e)=>{
-        if (typeof cb !== 'function') return;
-        if (!e.newValue) return;
-        const newValue = (0, $def2aa2b8a848888$export$2e2bcd8739ae039)(e.newValue);
-        if (newValue !== undefined) cb(newValue);
+ */ const $61f57676a9396065$var$receiveStorageEvent = (onStorageCb, emptyValue)=>(e)=>{
+        const newValue = !e.newValue ? emptyValue : (0, $def2aa2b8a848888$export$2e2bcd8739ae039)(e.newValue);
+        debugger;
+        onStorageCb(newValue);
     };
 var $61f57676a9396065$export$2e2bcd8739ae039 = $61f57676a9396065$var$receiveStorageEvent;
 
@@ -83,11 +82,12 @@ var $218826c4266cf93d$export$2e2bcd8739ae039 = $218826c4266cf93d$var$read;
 
 
 const $3d50c98fd8d027f6$var$emitStorageEvent = (key, stringifiedValue)=>{
+    const newValue = !stringifiedValue ? null : stringifiedValue;
     const config = {
         storageArea: window.localStorage,
         url: window.location.href,
         key: key,
-        newValue: stringifiedValue
+        newValue: newValue
     };
     const storageEvent = new StorageEvent("storage", config);
     window.dispatchEvent(storageEvent);
@@ -99,8 +99,7 @@ var $3d50c98fd8d027f6$export$2e2bcd8739ae039 = $3d50c98fd8d027f6$var$emitStorage
 
 
 
-
-const $0544f1dd1025833f$var$stringify = (value)=>{
+const $a0de713d683e5fb7$var$stringify = (value)=>{
     try {
         const stringifiedValue = JSON.stringify(value);
         return stringifiedValue;
@@ -108,6 +107,9 @@ const $0544f1dd1025833f$var$stringify = (value)=>{
         return undefined;
     }
 };
+var $a0de713d683e5fb7$export$2e2bcd8739ae039 = $a0de713d683e5fb7$var$stringify;
+
+
 /**
  * Set an namespace in localStorage or a nested value at that namespace
  *
@@ -120,8 +122,8 @@ const $0544f1dd1025833f$var$stringify = (value)=>{
     return (value, path)=>{
         const currentNamespace = (0, $218826c4266cf93d$export$2e2bcd8739ae039)(namespace)();
         const updatedNamespaceValue = (0, $hgUW1$isNil)(path) ? value : (0, $hgUW1$set)((0, $hgUW1$lensPath)(path), value, currentNamespace);
-        const stringifiedNamespace = $0544f1dd1025833f$var$stringify(updatedNamespaceValue);
-        if ((0, $adb58637f2755f63$export$2e2bcd8739ae039)(stringifiedNamespace)) return;
+        const stringifiedNamespace = (0, $a0de713d683e5fb7$export$2e2bcd8739ae039)(updatedNamespaceValue);
+        if (!stringifiedNamespace) return;
         localStorage.setItem(namespace, stringifiedNamespace);
         (0, $3d50c98fd8d027f6$export$2e2bcd8739ae039)(namespace, stringifiedNamespace);
     };
@@ -140,7 +142,7 @@ var $0544f1dd1025833f$export$2e2bcd8739ae039 = $0544f1dd1025833f$var$update;
     return (pathToProp)=>{
         if ((0, $adb58637f2755f63$export$2e2bcd8739ae039)(pathToProp)) {
             localStorage.removeItem(namespace);
-            (0, $3d50c98fd8d027f6$export$2e2bcd8739ae039)(namespace, null);
+            (0, $3d50c98fd8d027f6$export$2e2bcd8739ae039)(namespace);
             return;
         }
         const namespaceValue = (0, $218826c4266cf93d$export$2e2bcd8739ae039)(namespace)();
@@ -156,11 +158,12 @@ var $54bf75e0ecf09f50$export$2e2bcd8739ae039 = $54bf75e0ecf09f50$var$unset;
  * Interact with namespaced localStorage
  *
  * Emit storage events to other tabs
- */ const $2df9d79b6788b58e$var$useLocalStorage = (namespace, eventCb)=>{
+ */ const $2df9d79b6788b58e$var$useLocalStorage = (namespace, onStorageCb, emptyValue = {})=>{
     (0, $hgUW1$useEffect)(()=>{
-        const onStore = (0, $61f57676a9396065$export$2e2bcd8739ae039)(eventCb);
-        window.addEventListener('storage', onStore);
-        return ()=>window.removeEventListener('storage', onStore);
+        if (!onStorageCb) return;
+        const onStorage = (0, $61f57676a9396065$export$2e2bcd8739ae039)(onStorageCb, emptyValue);
+        window.addEventListener('storage', onStorage);
+        return ()=>window.removeEventListener('storage', onStorage);
     }, []);
     return {
         /**

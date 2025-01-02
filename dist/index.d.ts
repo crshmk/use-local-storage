@@ -3,7 +3,7 @@
  *
  * Emit storage events to other tabs
  */
-declare const useLocalStorage: <NamespaceType extends ParsedObjectOrArray>(namespace: string, eventCb?: Function) => {
+declare const useLocalStorage: <NamespaceType extends ParsedObjectOrArray>(namespace: string, onStorageCb?: (newValue: NamespaceType) => any, emptyValue?: ParsedObjectOrArray | undefined) => {
     /**
     * Read a namespace in localStorage or a nested value at that namespace
     *

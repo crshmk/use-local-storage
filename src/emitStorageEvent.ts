@@ -5,12 +5,13 @@ type StorageEventConfig = {
   newValue?: string | null
 }
 
-const emitStorageEvent = (key: string, stringifiedValue?: string | null) => {
+const emitStorageEvent = (key: string, stringifiedValue?: string) => {
+  const newValue = !stringifiedValue ? null : stringifiedValue
   const config: StorageEventConfig = {
     storageArea: window.localStorage,
     url: window.location.href,
     key,
-    newValue: stringifiedValue
+    newValue 
   }
   
   const storageEvent = new StorageEvent("storage", config)

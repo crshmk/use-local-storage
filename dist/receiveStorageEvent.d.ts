@@ -5,5 +5,5 @@
  * @param defaultValue T
  * @returns void
  */
-declare const receiveStorageEvent: (cb?: Function) => (e: StorageEvent) => void;
+declare const receiveStorageEvent: (onStorageCb: Function, emptyValue: ParsedObjectOrArray) => (e: StorageEvent) => void;
 export default receiveStorageEvent;
