@@ -7,9 +7,10 @@ import parse from './parse'
  * @param defaultValue T
  * @returns void
  */
-const receiveStorageEvent = (onStorageCb: Function, emptyValue:ParsedObjectOrArray ) => (e: StorageEvent) => {
+const receiveStorageEvent = (namespace: string, onStorageCb: Function, emptyValue:ParsedObjectOrArray ) => (e: StorageEvent) => {
+  const isStorageEventForThisNamespace = e.key === namespace
+  if(!isStorageEventForThisNamespace) return 
   const newValue = !e.newValue ? emptyValue : parse(e.newValue)
-  debugger
   onStorageCb(newValue)
 }
 
