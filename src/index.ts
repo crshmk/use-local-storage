@@ -15,7 +15,7 @@ const useLocalStorage = <NamespaceType extends ParsedObjectOrArray>(namespace: s
 
   useEffect(() => {
     if(!onStorageCb) return 
-    const onStorage = receiveStorageEvent(onStorageCb, emptyValue)
+    const onStorage = receiveStorageEvent(namespace, onStorageCb, emptyValue)
     window.addEventListener('storage', onStorage)
 
     return () => window.removeEventListener('storage', onStorage)
