@@ -6,7 +6,7 @@
   "types": "dist/index.d.ts",
   "type": "module",
   "scripts": {
-    "build": " mv .babelrc __babelrc && rm -rf dist && parcel build src/index.ts --dist-dir dist && npm run build:types && mv __babelrc .babelrc",
+    "build": "rm -rf dist && parcel build src/index.ts --dist-dir dist && npm run build:types",
     "build:types": "tsc --declaration --outDir dist",
     "test": "jest",
     "watch": "rm -rf dist && parcel watch src/index.ts"

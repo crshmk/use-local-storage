@@ -7,17 +7,10 @@ import parse from './parse'
  * @param defaultValue T
  * @returns void
  */
-const receiveStorageEvent = (cb?: Function) => (e: StorageEvent) => {
-  if(typeof cb !== 'function') return 
-   
-  if(!e.newValue) {
-    return 
-  }  
-
-  const newValue = parse(e.newValue)
-  if (newValue !== undefined) {
-    cb(newValue)
-  }
+const receiveStorageEvent = (onStorageCb: Function, emptyValue:ParsedObjectOrArray ) => (e: StorageEvent) => {
+  const newValue = !e.newValue ? emptyValue : parse(e.newValue)
+  debugger
+  onStorageCb(newValue)
 }
 
 export default receiveStorageEvent

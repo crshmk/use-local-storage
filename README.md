@@ -1,24 +1,26 @@
-## `localStorage` React hook
+## `useLocalStorage` React hook
 
-- Every namespace with this localStorage hook is an object or array; not for primitives at the root.
-- `update`, `read`, or `unset` a namespace (e.g. `'user'`) or a nested prop (e.g. `user.preferences.isDarkMode`) with a [path](https://ramdajs.com/docs/#path).
+- Namespaced approach where the hook defines a root prop (e.g. `user`) that holds an object or an array. 
+- `update`, `read`, or `unset` a namespace (e.g. `'user'`), or a nested prop (e.g. `user.preferences.isDarkMode`) with a [path](https://ramdajs.com/docs/#path).
 - Values are stringified (in) / parsed (out).
-- When parsing fails when retrieving the root (e.g. `'user'`), or when this value is not an object or an array, an object is [returned](https://github.com/crshmk/use-local-storage/blob/6242662d944ba2e9bb5f3d5a96ceaeda4972870b/src/parse/__tests__/unstring.test.js#L38). Malformed [arrays](https://github.com/crshmk/use-local-storage/blob/6242662d944ba2e9bb5f3d5a96ceaeda4972870b/src/parse/__tests__/unstring.test.js#L27) return an empty array. I prefer [emptiness](https://github.com/crshmk/utils?tab=readme-ov-file#isabsent) to truthiness. 
+- An optional callback receives updates from other tabs on `update` or `unset`.
+- When parsing fails when reading the root (e.g. `'user'`), or when this value is not an object or an array, an object is [returned](https://github.com/crshmk/use-local-storage/blob/6242662d944ba2e9bb5f3d5a96ceaeda4972870b/src/parse/__tests__/unstring.test.js#L38). Malformed [arrays](https://github.com/crshmk/use-local-storage/blob/6242662d944ba2e9bb5f3d5a96ceaeda4972870b/src/parse/__tests__/unstring.test.js#L27) return an empty array. Unset or malformed nested values return as `undefined`.
 
 ---
 
 
-### 1. Create a namespace in localStorage 
+#### 1. Create a namespace in localStorage 
 
 ```javascript 
-const { read, update, unset } = useLs<User>('user')
+import useLocalStorage from 'use-ls'
+
+const { read, update, unset } = useLocalStorage<User>('user')
 ```
 
 ---
 
 
-### 2. CRUD the storage with hook methods 
-values are parsed 
+#### 2. CRUD the storage with hook methods 
 
 ```javascript 
 type User = {
@@ -31,7 +33,7 @@ type User = {
   ]
 }
 
-const userStorage = useLs<User>('user')
+const userStorage = useLocalStorage<User>('user')
 
 // get the entire user 
 // typed as User
@@ -56,8 +58,28 @@ userStorage.unset()
 ---
 
 
+#### 3. Listen for storage events across tabs 
+A callback passed to the hook receives the parsed updated namespace value on `update` and `unset` 
+
 ```javascript 
-import useLs from 'use-ls'
+const useOrders = () => {
+  const [orders, setOrders] = useState<Order[]>([])
+  const ordersStorage = useLocalStorage<Order[]>('orders', setOrders) <----
+```
+
+When aligning with state, pass an empty value for the state when the namespace is unset 
+```javascript 
+  const [orders, setOrders] = useState<Order[]>([])
+  // sets orders in state as [] when localStorage.orders is unset 
+  const ordersStorage = useLocalStorage<Order[]>('orders', setOrders, []) <----
+```
+
+
+---
+
+
+```javascript 
+import useLocalStorage from 'use-ls'
 
 type Order = {
   orderId: string 
@@ -70,7 +92,14 @@ const mockOrders: Order[] = [
 
 const useOrders = () => {
   const [orders, setOrders] = useState<Order[]>(mockOrders)
-  const ordersStorage = useLs<Order[]>('orders')
+  const ordersStorage = useLocalStorage<Order[]>('orders', setOrders)
+
+    useEffect(() => {
+    const storedOrders = ordersStorage.read()
+    if(Array.isArray(storedOrders)) {
+      setOrders(storedOrders)
+    }
+  }, [])
 
   const addOrder = (newOrder: Order) => {
     const newOrders = [...orders, newOrder]
@@ -89,13 +118,6 @@ const useOrders = () => {
   const getStoredOrderName = (orderIndex: number, itemIndex: number) => 
     ordersStorage.read<string>([orderIndex, 'orderItems', itemIndex, 'name'])
 
-  useEffect(() => {
-    const storedOrders = ordersStorage.read()
-    if(Array.isArray(storedOrders)) {
-      setOrders(storedOrders)
-    }
-  }, [])
-
   return {
     addOrder,
     clearOrders,
@@ -107,3 +129,7 @@ const useOrders = () => {
   }
  }
 ```
+
+
+---
+

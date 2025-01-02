@@ -5,6 +5,7 @@ node_modules/
 package-lock.json
 .parcel-cache
 .babelrc 
+_babelrc
 tsconfig.json
 jest.config.js 
 .parcelrc 

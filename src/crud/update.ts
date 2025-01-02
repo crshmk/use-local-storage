@@ -3,15 +3,7 @@ import read from './read'
 
 import { isNil, lensPath, set, Path } from 'ramda'
 import isAbsent from './isAbsent'
-
-const stringify = (value: unknown) => {
-  try {
-    const stringifiedValue = JSON.stringify(value)
-    return stringifiedValue
-  } catch(e) {
-    return undefined
-  }
-}
+import stringify from '../stringify'
 
 /**
  * Set an namespace in localStorage or a nested value at that namespace
@@ -30,7 +22,7 @@ const update = <NamespaceType extends ParsedObjectOrArray>(namespace: string): {
     const currentNamespace = read<NamespaceType>(namespace)()
     const updatedNamespaceValue = isNil(path) ? value : set(lensPath(path), value, currentNamespace)
     const stringifiedNamespace = stringify(updatedNamespaceValue)
-    if(isAbsent(stringifiedNamespace)) return 
+    if(!stringifiedNamespace) return 
     localStorage.setItem(namespace, stringifiedNamespace)
     emitStorageEvent(namespace, stringifiedNamespace)
   }

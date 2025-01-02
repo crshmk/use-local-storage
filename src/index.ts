@@ -11,13 +11,14 @@ import update from './crud/update'
  * 
  * Emit storage events to other tabs
  */
-const useLocalStorage = <NamespaceType extends ParsedObjectOrArray>(namespace: string, eventCb?: Function) => {
+const useLocalStorage = <NamespaceType extends ParsedObjectOrArray>(namespace: string, onStorageCb?: (newValue: NamespaceType) => any , emptyValue: ParsedObjectOrArray | undefined={}) => {
 
   useEffect(() => {
-    const onStore = receiveStorageEvent(eventCb)
-    window.addEventListener('storage', onStore)
+    if(!onStorageCb) return 
+    const onStorage = receiveStorageEvent(onStorageCb, emptyValue)
+    window.addEventListener('storage', onStorage)
 
-    return () => window.removeEventListener('storage', onStore)
+    return () => window.removeEventListener('storage', onStorage)
   }, [])
 
   return {
