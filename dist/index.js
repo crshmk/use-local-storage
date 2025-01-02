@@ -44,9 +44,10 @@ var $def2aa2b8a848888$export$2e2bcd8739ae039 = $def2aa2b8a848888$var$parse;
  * @param cb callback handed the parsed value of the namespace
  * @param defaultValue T
  * @returns void
- */ const $61f57676a9396065$var$receiveStorageEvent = (onStorageCb, emptyValue)=>(e)=>{
+ */ const $61f57676a9396065$var$receiveStorageEvent = (namespace, onStorageCb, emptyValue)=>(e)=>{
+        const isStorageEventForThisNamespace = e.key === namespace;
+        if (!isStorageEventForThisNamespace) return;
         const newValue = !e.newValue ? emptyValue : (0, $def2aa2b8a848888$export$2e2bcd8739ae039)(e.newValue);
-        debugger;
         onStorageCb(newValue);
     };
 var $61f57676a9396065$export$2e2bcd8739ae039 = $61f57676a9396065$var$receiveStorageEvent;
@@ -161,7 +162,7 @@ var $54bf75e0ecf09f50$export$2e2bcd8739ae039 = $54bf75e0ecf09f50$var$unset;
  */ const $2df9d79b6788b58e$var$useLocalStorage = (namespace, onStorageCb, emptyValue = {})=>{
     (0, $hgUW1$useEffect)(()=>{
         if (!onStorageCb) return;
-        const onStorage = (0, $61f57676a9396065$export$2e2bcd8739ae039)(onStorageCb, emptyValue);
+        const onStorage = (0, $61f57676a9396065$export$2e2bcd8739ae039)(namespace, onStorageCb, emptyValue);
         window.addEventListener('storage', onStorage);
         return ()=>window.removeEventListener('storage', onStorage);
     }, []);
