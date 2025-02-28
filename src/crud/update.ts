@@ -1,14 +1,10 @@
-import emitStorageEvent from '../emitStorageEvent'
 import read from './read'
 
 import { isNil, lensPath, set, Path } from 'ramda'
-import isAbsent from './isAbsent'
 import stringify from '../stringify'
 
 /**
  * Set an namespace in localStorage or a nested value at that namespace
- * 
- * Emit the update to other tabs 
  * 
  * @param {string} namespace root key of localStorage
  * @param {unknown} value parsed item value 
@@ -24,9 +20,7 @@ const update = <NamespaceType extends ParsedObjectOrArray>(namespace: string): {
     const stringifiedNamespace = stringify(updatedNamespaceValue)
     if(!stringifiedNamespace) return 
     localStorage.setItem(namespace, stringifiedNamespace)
-    emitStorageEvent(namespace, stringifiedNamespace)
   }
 }
- 
 
 export default update

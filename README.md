@@ -1,10 +1,13 @@
 ## `useLocalStorage` React hook
 
+requries [ramda](https://ramdajs.com/docs)
+
+
 - Namespaced approach where the hook defines a root prop (e.g. `user`) that holds an object or an array. 
 - `update`, `read`, or `unset` a namespace (e.g. `'user'`), or a nested prop (e.g. `user.preferences.isDarkMode`) with a [path](https://ramdajs.com/docs/#path).
 - Values are stringified (in) / parsed (out).
 - An optional callback receives updates from other tabs on `update` or `unset`.
-- When parsing fails when reading the root (e.g. `'user'`), or when this value is not an object or an array, an object is [returned](https://github.com/crshmk/use-local-storage/blob/6242662d944ba2e9bb5f3d5a96ceaeda4972870b/src/parse/__tests__/unstring.test.js#L38). Malformed [arrays](https://github.com/crshmk/use-local-storage/blob/6242662d944ba2e9bb5f3d5a96ceaeda4972870b/src/parse/__tests__/unstring.test.js#L27) return an empty array. Unset or malformed nested values return as `undefined`.
+- When parsing fails when reading the root (e.g. `'user'`), or when this value is not an object or an array, an empty object is [returned](https://github.com/crshmk/use-local-storage/blob/6242662d944ba2e9bb5f3d5a96ceaeda4972870b/src/parse/__tests__/unstring.test.js#L38). Malformed [arrays](https://github.com/crshmk/use-local-storage/blob/6242662d944ba2e9bb5f3d5a96ceaeda4972870b/src/parse/__tests__/unstring.test.js#L27) return an empty array. Unset or malformed nested values return as `undefined`.
 
 ---
 
@@ -14,7 +17,8 @@
 ```javascript 
 import useLocalStorage from 'use-ls'
 
-const { read, update, unset } = useLocalStorage<User>('user')
+const userStorage = useLocalStorage<User>('user')
+// { read, update, unset }
 ```
 
 ---
@@ -27,8 +31,8 @@ type User = {
   name: string 
   preferences: [
     {
-      name: 'darkMode',
-      value: false
+      name: 'mode',
+      value: 'dark'
     }
   ]
 }
@@ -44,7 +48,7 @@ userStorge.read()
 userStorage.read<string>(['preferences', 0, 'name'])
 
 // update that preference 
-userStorage.update<boolean>(['preferences', 0, 'value'], true)
+userStorage.update<boolean>(['preferences', 0, 'value'], 'light')
 
 // remove preferences prop 
 userStorage.unset(['preferences'])

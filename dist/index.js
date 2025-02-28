@@ -99,7 +99,6 @@ var $3d50c98fd8d027f6$export$2e2bcd8739ae039 = $3d50c98fd8d027f6$var$emitStorage
 
 
 
-
 const $a0de713d683e5fb7$var$stringify = (value)=>{
     try {
         const stringifiedValue = JSON.stringify(value);
@@ -114,8 +113,6 @@ var $a0de713d683e5fb7$export$2e2bcd8739ae039 = $a0de713d683e5fb7$var$stringify;
 /**
  * Set an namespace in localStorage or a nested value at that namespace
  *
- * Emit the update to other tabs
- *
  * @param {string} namespace root key of localStorage
  * @param {unknown} value parsed item value
  * @param {(string | number)[] | undefined} path Ramda Path to nested prop
@@ -126,7 +123,6 @@ var $a0de713d683e5fb7$export$2e2bcd8739ae039 = $a0de713d683e5fb7$var$stringify;
         const stringifiedNamespace = (0, $a0de713d683e5fb7$export$2e2bcd8739ae039)(updatedNamespaceValue);
         if (!stringifiedNamespace) return;
         localStorage.setItem(namespace, stringifiedNamespace);
-        (0, $3d50c98fd8d027f6$export$2e2bcd8739ae039)(namespace, stringifiedNamespace);
     };
 };
 var $0544f1dd1025833f$export$2e2bcd8739ae039 = $0544f1dd1025833f$var$update;

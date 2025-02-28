@@ -1,6 +1,6 @@
 {
   "name": "use-ls",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "localStorage React hook",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

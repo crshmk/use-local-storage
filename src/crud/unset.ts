@@ -5,8 +5,6 @@ import update from './update'
 import isAbsent from './isAbsent'
 import { dissocPath, Path } from 'ramda'
 
-import stringify from '../stringify'
-
 /**
  * Remove a namespace from localStorage or a nested value at that namespace
  * 
